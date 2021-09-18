@@ -1,14 +1,19 @@
 {
-  "name": "discord-bot",
+  "name": "discord-music-bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ."
   },
   "author": "Boris Grigorov",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "@discordjs/opus": "^0.3.3",
+    "discord.js": "^12.5.1",
+    "ffmpeg-static": "^4.2.7",
+    "mongoose": "^5.11.9",
+    "ytdl": "^1.4.1",
+    "ytdl-core": "^4.9.1"
   }
 }
