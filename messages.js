@@ -19,7 +19,7 @@ module.exports = class Messages {
                 if (this.voice) {
                     this.voice.disconnect();
                     msg.channel.send("Bye.");
-                    isPlaying = false;
+                    this.isPlaying = false;
                 } else {
                     msg.channel.send("I'm not connected, so I can't leave.");
                 }
@@ -31,6 +31,8 @@ module.exports = class Messages {
                 this.resume(msg, commands);
             } else if (commands[0] == "volume") {
                 this.volume(msg, commands);
+            } else if (commands[0] == "er") {
+                this.earrape(msg, commands);
             } else {
                 msg.channel.send("Unknown command");
             }
@@ -121,12 +123,37 @@ module.exports = class Messages {
             msg.channel.send(
                 "You have to be in voice channel to use this command."
             );
-        } else if (commands[1] > 1 || commands[1] <= 0) {
+        } else if (commands[1] > 50000 || commands[1] <= 0) {
             msg.channel.send("Enter value between 0.1 and 1.0");
         } else {
             if (this.player != null) {
                 this.player.setVolume(commands[1]);
                 msg.channel.send("Volume set to **" + commands[1] + "**");
+            } else {
+                msg.channel.send("Nothing is playing rn");
+            }
+        }
+    }
+
+    async earrape(msg, commands) {
+        var user = await msg.channel.guild.members.cache.get(msg.author.id);
+        if (!user.voice.channel) {
+            msg.channel.send(
+                "You have to be in voice channel to use this command."
+            );
+        } else if (commands[1] > 60 || commands[1] <= 0) {
+            msg.channel.send("Enter value between 60 and 1");
+        } else {
+            if (this.player != null) {
+                this.player.setVolume(500);
+                msg.channel.send(
+                    "Earraping for **" + commands[1] + "** seconds"
+                );
+                setTimeout(() => {
+                    try {
+                        this.player.setVolume(1);
+                    } catch (e) {}
+                }, commands[1] * 1000);
             } else {
                 msg.channel.send("Nothing is playing rn");
             }
